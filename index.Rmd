@@ -1,0 +1,186 @@
+---
+title: "Analysing sub-daily time series data"
+type: "Meetup"
+author: "Earo Wang"
+date: "Oct 12, 2017 <br> <br> Slides on http://bit.ly/subdaily"
+output:
+  xaringan::moon_reader:
+    css: ["default", "myremark.css"]
+    self_contained: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r initial, echo = FALSE, cache = FALSE, results = 'hide'}
+library(knitr)
+options(htmltools.dir.version = FALSE, tibble.width = 60)
+opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE, comment = "#>",
+  fig.path = 'figure/', cache.path = 'cache/', fig.align = 'center', 
+  fig.width = 12, fig.height = 9, fig.show = 'hold', 
+  cache = TRUE, external = TRUE, dev = 'svglite'
+)
+read_chunk('src/code.R')
+```
+
+.left-column[
+## Pedestrian counts `r emo::ji("walking_woman")`
+### - sensors
+]
+.right-column[
+```{r sensor-map, fig.height = 8}
+```
+]
+
+```{r theme-remark, echo = FALSE}
+```
+
+---
+
+.left-column[
+## Pedestrian counts `r emo::ji("walking_woman")`
+### - sensors
+]
+.right-column[
+```{r selected-sensor, fig.height = 8}
+```
+]
+
+---
+
+.left-column[
+## Pedestrian counts `r emo::ji("walking_woman")`
+### - sensors
+### - the data
+]
+.right-column[
+```{r ped-data}
+```
+]
+
+---
+
+.left-column[
+## Conventional displays
+### - time series plot
+]
+.right-column[
+```{r ts-plot, echo = FALSE}
+```
+]
+
+---
+
+.left-column[
+## Conventional displays
+### - time series plot
+]
+.right-column[
+```{r ts-plot, eval = FALSE}
+```
+]
+
+---
+
+.left-column[
+## Conventional displays
+### - time series plot
+### - faceted display
+]
+.right-column[
+```{r facet-time, echo = FALSE}
+```
+]
+
+---
+
+.left-column[
+## Conventional displays
+### - time series plot
+### - faceted display
+]
+.right-column[
+```{r facet-time, eval = FALSE}
+```
+]
+
+---
+
+class: inverse middle center
+
+# Calendar-based visualisation
+
+---
+
+background-image: url(img/calendar.png)
+background-size: cover
+
+---
+
+```{r flinders-2016, include = FALSE}
+```
+
+```{r flinders-2016-plot, echo = FALSE}
+```
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+]
+.right-column[
+### The `frame_calendar()` function
+```{r flinders-2016}
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+]
+.right-column[
+### The args of `frame_calendar()`
+```
+frame_calendar(
+  data, x, y, date, calendar = "monthly", dir = "h",
+  sunday = FALSE, nrow = NULL, ncol = NULL, polar = FALSE,
+  scale = "fixed", width = 0.95, height = 0.95
+)
+```
+]
+
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+]
+.right-column[
+```{r flinders-2016-plot}
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+]
+
+
+---
+
+class: inverse middle center
+
+## This work is licensed under <br> [<i class="fa fa-creative-commons" aria-hidden="true"></i> Creative Commons](https://creativecommons.org/licenses/by-nc-sa/4.0/)
