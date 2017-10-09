@@ -13,7 +13,7 @@ class: center, middle, inverse, title-slide
 
 # Analysing sub-daily time series data
 ### Earo Wang
-### Oct 12, 2017 <br> <br> Slides on <a href="http://bit.ly/subdaily" class="uri">http://bit.ly/subdaily</a>
+### Oct 12, 2017 <br> <br> Slides on <a href="http://bit.ly/subdaily-vis" class="uri">http://bit.ly/subdaily-vis</a>
 
 ---
 
@@ -76,28 +76,31 @@ sensor_loc %&gt;%
 
 ```r
 pedestrian &lt;- as_tibble(rwalkr::run_melb(year = 2016))
-subdat &lt;- pedestrian %&gt;% 
-  filter(Sensor %in% sensors) %&gt;% 
-  mutate(Day = wday2(Date, label = TRUE))
-subdat
+pedestrian
 ```
 
 ```
-#&gt; # A tibble: 26,352 x 6
-#&gt;                               Sensor           Date_Time
-#&gt;                                &lt;chr&gt;              &lt;dttm&gt;
-#&gt;  1 Flinders Street Station Underpass 2016-01-01 00:00:00
-#&gt;  2                     State Library 2016-01-01 00:00:00
-#&gt;  3                 Flagstaff Station 2016-01-01 00:00:00
-#&gt;  4 Flinders Street Station Underpass 2016-01-01 01:00:00
-#&gt;  5                     State Library 2016-01-01 01:00:00
-#&gt;  6                 Flagstaff Station 2016-01-01 01:00:00
-#&gt;  7 Flinders Street Station Underpass 2016-01-01 02:00:00
-#&gt;  8                     State Library 2016-01-01 02:00:00
-#&gt;  9                 Flagstaff Station 2016-01-01 02:00:00
-#&gt; 10 Flinders Street Station Underpass 2016-01-01 03:00:00
-#&gt; # ... with 26,342 more rows, and 4 more variables:
-#&gt; #   Date &lt;date&gt;, Time &lt;int&gt;, Count &lt;int&gt;, Day &lt;ord&gt;
+#&gt; # A tibble: 377,712 x 5
+#&gt;                               Sensor  Date_Time       Date
+#&gt;                                &lt;chr&gt;     &lt;dttm&gt;     &lt;date&gt;
+#&gt;  1    Chinatown-Lt Bourke St (South) 2016-01-01 2016-01-01
+#&gt;  2                   Waterfront City 2016-01-01 2016-01-01
+#&gt;  3                   Lygon St (East) 2016-01-01 2016-01-01
+#&gt;  4                  Town Hall (West) 2016-01-01 2016-01-01
+#&gt;  5      Monash Rd-Swanston St (West) 2016-01-01 2016-01-01
+#&gt;  6             Collins Place (South) 2016-01-01 2016-01-01
+#&gt;  7     Spencer St-Collins St (North) 2016-01-01 2016-01-01
+#&gt;  8 Flinders Street Station Underpass 2016-01-01 2016-01-01
+#&gt;  9                    Birrarung Marr 2016-01-01 2016-01-01
+#&gt; 10     QV Market-Elizabeth St (West) 2016-01-01 2016-01-01
+#&gt; # ... with 377,702 more rows, and 2 more variables:
+#&gt; #   Time &lt;int&gt;, Count &lt;int&gt;
+```
+
+```r
+subdat &lt;- pedestrian %&gt;% 
+  filter(Sensor %in% sensors) %&gt;% 
+  mutate(Day = wday2(Date, label = TRUE))
 ```
 ]
 
@@ -116,33 +119,6 @@ subdat
 .left-column[
 ## Conventional displays
 ### - time series plot
-]
-.right-column[
-
-```r
-# conventional time series plot
-subdat %&gt;% 
-  ggplot(aes(x = Date_Time, y = Count, colour = Sensor)) +
-  geom_line(size = 0.5) +
-  facet_grid(
-    Sensor ~ ., 
-    labeller = labeller(Sensor = label_wrap_gen(20))
-  ) +
-  scale_colour_brewer(
-    palette = "Dark2", 
-    guide = guide_legend(title = "Sensor")
-  ) +
-  theme(legend.position = "bottom") +
-  xlab("Date Time") +
-  ylab("Hourly Counts")
-```
-]
-
----
-
-.left-column[
-## Conventional displays
-### - time series plot
 ### - faceted display
 ]
 .right-column[
@@ -151,39 +127,11 @@ subdat %&gt;%
 
 ---
 
-.left-column[
-## Conventional displays
-### - time series plot
-### - faceted display
-]
-.right-column[
-
-```r
-# time series plot faceted by sensors and day of week
-subdat %&gt;% 
-  ggplot(aes(x = Time, y = Count, group = Date, 
-    colour = Sensor)) +
-  geom_line(size = 0.5) +
-  facet_grid(
-    Sensor ~ Day, 
-    labeller = labeller(Sensor = label_wrap_gen(20))
-  ) +
-  scale_x_continuous(breaks = seq(6, 23, by = 6)) +
-  scale_colour_brewer(
-    palette = "Dark2", 
-    guide = guide_legend(title = "Sensor")
-  ) +
-  theme(legend.position = "bottom") +
-  xlab("Time") +
-  ylab("Hourly Counts")
-```
-]
-
----
-
 class: inverse middle center
 
-# Calendar-based visualisation
+# sugrrants
+## .blue[`%&gt;%`]
+## calendar-based visualisation
 
 ---
 
@@ -209,14 +157,14 @@ background-size: cover
 # calendar plot for flinders street station
 flinders &lt;- subdat %&gt;% 
   filter(Sensor == "Flinders Street Station Underpass")
-
 flinders_cal &lt;- flinders %&gt;%
-  frame_calendar(x = Time, y = Count, date = Date)
+* frame_calendar(x = Time, y = Count, date = Date)
 flinders_cal
 ```
 
+
 ```
-#&gt; # A tibble: 8,784 x 8
+#&gt; # A tibble: 8,784 x 9
 #&gt;                               Sensor           Date_Time
 #&gt;  *                             &lt;chr&gt;              &lt;dttm&gt;
 #&gt;  1 Flinders Street Station Underpass 2016-01-01 00:00:00
@@ -229,10 +177,11 @@ flinders_cal
 #&gt;  8 Flinders Street Station Underpass 2016-01-01 07:00:00
 #&gt;  9 Flinders Street Station Underpass 2016-01-01 08:00:00
 #&gt; 10 Flinders Street Station Underpass 2016-01-01 09:00:00
-#&gt; # ... with 8,774 more rows, and 6 more variables:
-#&gt; #   Time &lt;int&gt;, Count &lt;int&gt;, Day &lt;ord&gt;, Date &lt;date&gt;,
-#&gt; #   .Time &lt;dbl&gt;, .Count &lt;dbl&gt;
+#&gt; # ... with 8,774 more rows, and 7 more variables:
+#&gt; #   Time &lt;int&gt;, Count &lt;int&gt;, Day &lt;ord&gt;, Holiday &lt;lgl&gt;,
+#&gt; #   Date &lt;date&gt;, .Time &lt;dbl&gt;, .Count &lt;dbl&gt;
 ```
+
 ]
 
 ---
@@ -243,7 +192,7 @@ flinders_cal
 ]
 .right-column[
 ### The args of `frame_calendar()`
-```
+```r
 frame_calendar(
   data, x, y, date, calendar = "monthly", dir = "h",
   sunday = FALSE, nrow = NULL, ncol = NULL, polar = FALSE,
@@ -261,14 +210,15 @@ frame_calendar(
 ### - ggplot2 vis
 ]
 .right-column[
-
 ```r
 p_flinders &lt;- flinders_cal %&gt;% 
-  ggplot(aes(x = .Time, y = .Count, group = Date)) +
-  geom_line()
+  ggplot(aes(
+    x = .Time, y = .Count, group = Date, colour = Holiday
+  )) +
+  geom_line() +
+  scale_colour_brewer(palette = "Dark2")
 prettify(p_flinders)
 ```
-
 &lt;img src="figure/flinders-2016-plot-1.svg" style="display: block; margin: auto;" /&gt;
 ]
 
@@ -281,14 +231,335 @@ prettify(p_flinders)
 ### - variations
 ]
 .right-column[
+### Local scale when `scale = "free"`
+```r
+# calendar plot for flinders street station using local scale
+flinders_cal_free &lt;- flinders %&gt;% 
+* frame_calendar(
+*   x = Time, y = Count, date = Date, scale = "free"
+* )
+
+p_flinders_free &lt;- flinders_cal_free %&gt;% 
+  ggplot(aes(x = .Time, y = .Count, group = Date)) +
+  geom_line()
+prettify(p_flinders_free)
+```
 ]
 
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Local scale when `scale = "free"`
+&lt;img src="figure/flinders-free-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Lagged scatterplot on a "daily" calendar
+```r
+# lagged scatterplot for flinders street station in the daily calendar format
+flinders_cal_day &lt;- flinders %&gt;% 
+  mutate(Lagged_Counts = lag(Count)) %&gt;% 
+* frame_calendar(
+*   x = Count, y = Lagged_Counts, date = Date, 
+*   calendar = "daily", width = 0.95, height = 0.8
+* )
+
+p_flinders_day &lt;- flinders_cal_day %&gt;% 
+  ggplot(aes(x = .Count, y = .Lagged_Counts, group = Date)) +
+  geom_point(size = 0.8, alpha = 0.8)
+prettify(p_flinders_day)
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Lagged scatterplot on a "daily" calendar
+&lt;img src="figure/scatterplot-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Work with `group_by()`
+```r
+facet_cal &lt;- subdat %&gt;% 
+  group_by(Sensor) %&gt;% 
+* frame_calendar(
+*   x = Time, y = Count, date = Date, nrow = 2
+* )
+
+p_facet &lt;- facet_cal %&gt;% 
+  ggplot(aes(x = .Time, y = .Count, group = Date)) +
+  geom_line(aes(colour = Sensor)) +
+  facet_grid(
+    Sensor ~ ., 
+    labeller = labeller(Sensor = label_wrap_gen(20))
+  ) +
+  scale_colour_brewer(
+    palette = "Dark2", 
+    guide = guide_legend(title = "Sensor")
+  )
+prettify(p_facet, label = NULL)
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Work with `group_by()`
+&lt;img src="figure/facet-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Boxplots
+```r
+# boxplots for hourly counts across all the sensors in 2016 December
+pedestrian_dec &lt;- pedestrian %&gt;% 
+  filter(Date &gt;= as.Date("2016-12-01")) %&gt;% 
+* frame_calendar(
+*   x = Time, y = Count, date = Date, 
+*   width = 0.97, height = 0.97
+* )
+p_boxplot &lt;- pedestrian_dec %&gt;% 
+  ggplot() +
+  geom_boxplot(
+    aes(x = .Time, y = .Count, group = Date_Time),
+    outlier.size = 0.8, width = 0.005, 
+    position = "identity", colour = "grey30"
+  ) +
+  geom_smooth(
+    aes(.Time, .Count, group = Date), 
+    se = FALSE, method = "loess"
+  )
+prettify(p_boxplot, label = c("label", "text", "text2"))
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### boxplots
+&lt;img src="figure/boxplot-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+### - misc
+]
+.right-column[
+* Other languages support: `?frame_calendar`
+
+
+* More examples: `vignette("frame-calendar")`
+
+
+* Algorithm description: &lt;http://pub.earo.me/calendar-vis.pdf&gt;
+]
 
 ---
 
 class: inverse middle center
 
-## This work is licensed under &lt;br&gt; [&lt;i class="fa fa-creative-commons" aria-hidden="true"&gt;&lt;/i&gt; Creative Commons](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+# tsibble
+## .blue[`%&gt;%`]
+## Australia English for time series tibble
+
+---
+
+.left-column[
+## tsibble
+### - overview
+]
+.right-column[
+The **tsibble** package provides a data class of `tbl_ts` to manage temporal data frames in a tidy and modern way. A tsibble consists of a time index, keys and other measured variables in a data-centric format, which is built on top of the *tibble*.
+
+### Installation
+```r
+# install.packages("devtools")
+devtools::install_github("earowang/tsibble")
+```
+]
+
+---
+
+.left-column[
+## tsibble
+### - overview
+### - coercion
+]
+.right-column[
+### Start with a tibble/data.frame
+
+```r
+pedestrian
+```
+```
+*#&gt; # A tibble: 377,712 x 5
+#&gt;                               Sensor  Date_Time       Date
+#&gt;                                &lt;chr&gt;     &lt;dttm&gt;     &lt;date&gt;
+#&gt;  1    Chinatown-Lt Bourke St (South) 2016-01-01 2016-01-01
+#&gt;  2                   Waterfront City 2016-01-01 2016-01-01
+#&gt;  3                   Lygon St (East) 2016-01-01 2016-01-01
+#&gt;  4                  Town Hall (West) 2016-01-01 2016-01-01
+#&gt;  5      Monash Rd-Swanston St (West) 2016-01-01 2016-01-01
+#&gt;  6             Collins Place (South) 2016-01-01 2016-01-01
+#&gt;  7     Spencer St-Collins St (North) 2016-01-01 2016-01-01
+#&gt;  8 Flinders Street Station Underpass 2016-01-01 2016-01-01
+#&gt;  9                    Birrarung Marr 2016-01-01 2016-01-01
+#&gt; 10     QV Market-Elizabeth St (West) 2016-01-01 2016-01-01
+#&gt; # ... with 377,702 more rows, and 2 more variables:
+#&gt; #   Time &lt;int&gt;, Count &lt;int&gt;
+```
+]
+
+---
+
+.left-column[
+## tsibble
+### - overview
+### - coercion
+]
+.right-column[
+### Coerce to a tsibble with `as_tsibble()`
+
+```r
+library(tsibble)
+pedestrian %&gt;% 
+  as_tsibble(Sensor, index = Date_Time)
+```
+
+```
+*#&gt; # A tsibble: 377,712 x 5 [1HOUR]
+*#&gt; # Keys:      Sensor
+#&gt;  *                            Sensor  Date_Time       Date
+#&gt;                                &lt;chr&gt;     &lt;dttm&gt;     &lt;date&gt;
+#&gt;  1    Chinatown-Lt Bourke St (South) 2016-01-01 2016-01-01
+#&gt;  2                   Waterfront City 2016-01-01 2016-01-01
+#&gt;  3                   Lygon St (East) 2016-01-01 2016-01-01
+#&gt;  4                  Town Hall (West) 2016-01-01 2016-01-01
+#&gt;  5      Monash Rd-Swanston St (West) 2016-01-01 2016-01-01
+#&gt;  6             Collins Place (South) 2016-01-01 2016-01-01
+#&gt;  7     Spencer St-Collins St (North) 2016-01-01 2016-01-01
+#&gt;  8 Flinders Street Station Underpass 2016-01-01 2016-01-01
+#&gt;  9                    Birrarung Marr 2016-01-01 2016-01-01
+#&gt; 10     QV Market-Elizabeth St (West) 2016-01-01 2016-01-01
+#&gt; # ... with 377,702 more rows, and 2 more variables:
+#&gt; #   Time &lt;int&gt;, Count &lt;int&gt;
+```
+]
+
+---
+
+.left-column[
+## tsibble
+### - overview
+### - coercion
+### - verbs
+]
+.right-column[
+* `mutate()`:
+* `select()`:
+* `filter()`:
+* `slice()`:
+* `arrange()`:
+* `rename()`:
+* `group_by()`:
+* `tsummarise()`:
+]
+
+---
+
+.left-column[
+## tsibble
+### - overview
+### - coercion
+### - verbs
+]
+.right-column[
+### The `tsummarise()` function
+
+```r
+ped_ts &lt;- as_tsibble(pedestrian, Sensor, index = Date_Time)
+ped_ts %&gt;% 
+  group_by(Sensor) %&gt;% 
+  tsummarise(
+    YrMon = yearmth(Date_Time),
+    MinC = min(Count, na.rm = TRUE),
+    MaxC = max(Count, na.rm = TRUE)
+  )
+```
+
+```
+#&gt; # A tsibble: 516 x 4 [1MONTH]
+#&gt; # Keys:      Sensor
+#&gt; # Groups:    Sensor
+#&gt;          Sensor    YrMon  MinC  MaxC
+#&gt;  *        &lt;chr&gt;    &lt;mth&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 Alfred Place 2016 Jan     0  1067
+#&gt;  2 Alfred Place 2016 Feb     0  1099
+#&gt;  3 Alfred Place 2016 Mar     1  1161
+#&gt;  4 Alfred Place 2016 Apr     0  1107
+#&gt;  5 Alfred Place 2016 May     0  1099
+#&gt;  6 Alfred Place 2016 Jun     0  1101
+#&gt;  7 Alfred Place 2016 Jul     0  1174
+#&gt;  8 Alfred Place 2016 Aug     0  1075
+#&gt;  9 Alfred Place 2016 Sep     0  1071
+#&gt; 10 Alfred Place 2016 Oct     0  1057
+#&gt; # ... with 506 more rows
+```
+]
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({

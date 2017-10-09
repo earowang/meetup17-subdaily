@@ -2,7 +2,7 @@
 title: "Analysing sub-daily time series data"
 type: "Meetup"
 author: "Earo Wang"
-date: "Oct 12, 2017 <br> <br> Slides on http://bit.ly/subdaily"
+date: "Oct 12, 2017 <br> <br> Slides on http://bit.ly/subdaily-vis"
 output:
   xaringan::moon_reader:
     css: ["default", "myremark.css"]
@@ -19,7 +19,7 @@ options(htmltools.dir.version = FALSE, tibble.width = 60)
 opts_chunk$set(
   echo = TRUE, warning = FALSE, message = FALSE, comment = "#>",
   fig.path = 'figure/', cache.path = 'cache/', fig.align = 'center', 
-  fig.width = 12, fig.height = 9, fig.show = 'hold', 
+  fig.width = 12, fig.height = 11, fig.show = 'hold', 
   cache = TRUE, external = TRUE, dev = 'svglite'
 )
 read_chunk('src/code.R')
@@ -58,6 +58,8 @@ read_chunk('src/code.R')
 .right-column[
 ```{r ped-data}
 ```
+```{r ped-sub}
+```
 ]
 
 ---
@@ -76,17 +78,6 @@ read_chunk('src/code.R')
 .left-column[
 ## Conventional displays
 ### - time series plot
-]
-.right-column[
-```{r ts-plot, eval = FALSE}
-```
-]
-
----
-
-.left-column[
-## Conventional displays
-### - time series plot
 ### - faceted display
 ]
 .right-column[
@@ -96,21 +87,11 @@ read_chunk('src/code.R')
 
 ---
 
-.left-column[
-## Conventional displays
-### - time series plot
-### - faceted display
-]
-.right-column[
-```{r facet-time, eval = FALSE}
-```
-]
-
----
-
 class: inverse middle center
 
-# Calendar-based visualisation
+# sugrrants
+## .blue[`%>%`]
+## calendar-based visualisation
 
 ---
 
@@ -122,7 +103,7 @@ background-size: cover
 ```{r flinders-2016, include = FALSE}
 ```
 
-```{r flinders-2016-plot, echo = FALSE}
+```{r flinders-2016-plot, echo = FALSE, fig.height = 11}
 ```
 
 ---
@@ -133,8 +114,19 @@ background-size: cover
 ]
 .right-column[
 ### The `frame_calendar()` function
-```{r flinders-2016}
+
+```r
+# calendar plot for flinders street station
+flinders <- subdat %>% 
+  filter(Sensor == "Flinders Street Station Underpass")
+flinders_cal <- flinders %>%
+* frame_calendar(x = Time, y = Count, date = Date)
+flinders_cal
 ```
+
+```{r flinders-2016, echo = FALSE}
+```
+
 ]
 
 ---
@@ -145,7 +137,7 @@ background-size: cover
 ]
 .right-column[
 ### The args of `frame_calendar()`
-```
+```r
 frame_calendar(
   data, x, y, date, calendar = "monthly", dir = "h",
   sunday = FALSE, nrow = NULL, ncol = NULL, polar = FALSE,
@@ -163,7 +155,16 @@ frame_calendar(
 ### - ggplot2 vis
 ]
 .right-column[
-```{r flinders-2016-plot}
+```r
+p_flinders <- flinders_cal %>% 
+  ggplot(aes(
+    x = .Time, y = .Count, group = Date, colour = Holiday
+  )) +
+  geom_line() +
+  scale_colour_brewer(palette = "Dark2")
+prettify(p_flinders)
+```
+```{r flinders-2016-plot, echo = FALSE, fig.height = 9}
 ```
 ]
 
@@ -176,11 +177,303 @@ frame_calendar(
 ### - variations
 ]
 .right-column[
+### Local scale when `scale = "free"`
+```r
+# calendar plot for flinders street station using local scale
+flinders_cal_free <- flinders %>% 
+* frame_calendar(
+*   x = Time, y = Count, date = Date, scale = "free"
+* )
+
+p_flinders_free <- flinders_cal_free %>% 
+  ggplot(aes(x = .Time, y = .Count, group = Date)) +
+  geom_line()
+prettify(p_flinders_free)
+```
 ]
 
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Local scale when `scale = "free"`
+```{r flinders-free, echo = FALSE}
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Lagged scatterplot on a "daily" calendar
+```r
+# lagged scatterplot for flinders street station in the daily calendar format
+flinders_cal_day <- flinders %>% 
+  mutate(Lagged_Counts = lag(Count)) %>% 
+* frame_calendar(
+*   x = Count, y = Lagged_Counts, date = Date, 
+*   calendar = "daily", width = 0.95, height = 0.8
+* )
+
+p_flinders_day <- flinders_cal_day %>% 
+  ggplot(aes(x = .Count, y = .Lagged_Counts, group = Date)) +
+  geom_point(size = 0.8, alpha = 0.8)
+prettify(p_flinders_day)
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Lagged scatterplot on a "daily" calendar
+```{r scatterplot, echo = FALSE}
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Work with `group_by()`
+```r
+facet_cal <- subdat %>% 
+  group_by(Sensor) %>% 
+* frame_calendar(
+*   x = Time, y = Count, date = Date, nrow = 2
+* )
+
+p_facet <- facet_cal %>% 
+  ggplot(aes(x = .Time, y = .Count, group = Date)) +
+  geom_line(aes(colour = Sensor)) +
+  facet_grid(
+    Sensor ~ ., 
+    labeller = labeller(Sensor = label_wrap_gen(20))
+  ) +
+  scale_colour_brewer(
+    palette = "Dark2", 
+    guide = guide_legend(title = "Sensor")
+  )
+prettify(p_facet, label = NULL)
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Work with `group_by()`
+```{r facet, echo = FALSE}
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Boxplots
+```r
+# boxplots for hourly counts across all the sensors in 2016 December
+pedestrian_dec <- pedestrian %>% 
+  filter(Date >= as.Date("2016-12-01")) %>% 
+* frame_calendar(
+*   x = Time, y = Count, date = Date, 
+*   width = 0.97, height = 0.97
+* )
+p_boxplot <- pedestrian_dec %>% 
+  ggplot() +
+  geom_boxplot(
+    aes(x = .Time, y = .Count, group = Date_Time),
+    outlier.size = 0.8, width = 0.005, 
+    position = "identity", colour = "grey30"
+  ) +
+  geom_smooth(
+    aes(.Time, .Count, group = Date), 
+    se = FALSE, method = "loess"
+  )
+prettify(p_boxplot, label = c("label", "text", "text2"))
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### boxplots
+```{r boxplot, echo = FALSE}
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+### - misc
+]
+.right-column[
+* Other languages support: `?frame_calendar`
+
+
+* More examples: `vignette("frame-calendar")`
+
+
+* Algorithm description: <http://pub.earo.me/calendar-vis.pdf>
+]
 
 ---
 
 class: inverse middle center
 
-## This work is licensed under <br> [<i class="fa fa-creative-commons" aria-hidden="true"></i> Creative Commons](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+# tsibble
+## .blue[`%>%`]
+## Australia English for time series tibble
+
+---
+
+.left-column[
+## tsibble
+### - overview
+]
+.right-column[
+The **tsibble** package provides a data class of `tbl_ts` to manage temporal data frames in a tidy and modern way. A tsibble consists of a time index, keys and other measured variables in a data-centric format, which is built on top of the *tibble*.
+
+### Installation
+```r
+# install.packages("devtools")
+devtools::install_github("earowang/tsibble")
+```
+]
+
+---
+
+.left-column[
+## tsibble
+### - overview
+### - coercion
+]
+.right-column[
+### Start with a tibble/data.frame
+```{r ped-df, results = "hide"}
+```
+```
+*#> # A tibble: 377,712 x 5
+#>                               Sensor  Date_Time       Date
+#>                                <chr>     <dttm>     <date>
+#>  1    Chinatown-Lt Bourke St (South) 2016-01-01 2016-01-01
+#>  2                   Waterfront City 2016-01-01 2016-01-01
+#>  3                   Lygon St (East) 2016-01-01 2016-01-01
+#>  4                  Town Hall (West) 2016-01-01 2016-01-01
+#>  5      Monash Rd-Swanston St (West) 2016-01-01 2016-01-01
+#>  6             Collins Place (South) 2016-01-01 2016-01-01
+#>  7     Spencer St-Collins St (North) 2016-01-01 2016-01-01
+#>  8 Flinders Street Station Underpass 2016-01-01 2016-01-01
+#>  9                    Birrarung Marr 2016-01-01 2016-01-01
+#> 10     QV Market-Elizabeth St (West) 2016-01-01 2016-01-01
+#> # ... with 377,702 more rows, and 2 more variables:
+#> #   Time <int>, Count <int>
+```
+]
+
+---
+
+.left-column[
+## tsibble
+### - overview
+### - coercion
+]
+.right-column[
+### Coerce to a tsibble with `as_tsibble()`
+```{r ped-ts, results = "hide"}
+```
+
+```
+*#> # A tsibble: 377,712 x 5 [1HOUR]
+*#> # Keys:      Sensor
+#>  *                            Sensor  Date_Time       Date
+#>                                <chr>     <dttm>     <date>
+#>  1    Chinatown-Lt Bourke St (South) 2016-01-01 2016-01-01
+#>  2                   Waterfront City 2016-01-01 2016-01-01
+#>  3                   Lygon St (East) 2016-01-01 2016-01-01
+#>  4                  Town Hall (West) 2016-01-01 2016-01-01
+#>  5      Monash Rd-Swanston St (West) 2016-01-01 2016-01-01
+#>  6             Collins Place (South) 2016-01-01 2016-01-01
+#>  7     Spencer St-Collins St (North) 2016-01-01 2016-01-01
+#>  8 Flinders Street Station Underpass 2016-01-01 2016-01-01
+#>  9                    Birrarung Marr 2016-01-01 2016-01-01
+#> 10     QV Market-Elizabeth St (West) 2016-01-01 2016-01-01
+#> # ... with 377,702 more rows, and 2 more variables:
+#> #   Time <int>, Count <int>
+```
+]
+
+---
+
+.left-column[
+## tsibble
+### - overview
+### - coercion
+### - verbs
+]
+.right-column[
+* `mutate()`:
+* `select()`:
+* `filter()`:
+* `slice()`:
+* `arrange()`:
+* `rename()`:
+* `group_by()`:
+* `tsummarise()`:
+]
+
+---
+
+.left-column[
+## tsibble
+### - overview
+### - coercion
+### - verbs
+]
+.right-column[
+### The `tsummarise()` function
+```{r tsummarise}
+```
+]
+
