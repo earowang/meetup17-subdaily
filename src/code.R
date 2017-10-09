@@ -109,7 +109,7 @@ flinders_cal_free <- flinders %>%
 p_flinders_free <- flinders_cal_free %>% 
   ggplot(aes(x = .Time, y = .Count, group = Date)) +
   geom_line()
-prettify(p_flinders_free)
+prettify(p_flinders_free, size = 5)
 
 ## ---- scatterplot
 # lagged scatterplot for flinders street station in the daily calendar format
@@ -123,7 +123,7 @@ flinders_cal_day <- flinders %>%
 p_flinders_day <- flinders_cal_day %>% 
   ggplot(aes(x = .Count, y = .Lagged_Counts, group = Date)) +
   geom_point(size = 0.8, alpha = 0.8)
-prettify(p_flinders_day)
+prettify(p_flinders_day, size = 5)
 
 ## ---- overlay
 # overlaying calendar plots 
@@ -203,7 +203,7 @@ p_boxplot <- pedestrian_dec %>%
     aes(.Time, .Count, group = Date), 
     se = FALSE, method = "loess"
   )
-prettify(p_boxplot, label = c("label", "text", "text2"))
+prettify(p_boxplot, label = c("label", "text", "text2"), size = 5)
 
 ## ---- ped-df
 pedestrian

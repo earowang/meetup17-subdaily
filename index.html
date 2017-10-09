@@ -199,6 +199,15 @@ frame_calendar(
   scale = "fixed", width = 0.95, height = 0.95
 )
 ```
+* `x`, `y`: a unquoted (or bare) variable mapping to x and y axis.
+* `date`: a Date variable mapping to dates in the calendar.
+* `calendar`: type of calendar. "monthly", "weekly", "daily".
+&lt;!-- * `dir`: direction of calendar: "h" for horizontal or "v" for vertical. --&gt;
+* `sunday`: `FALSE` indicating to starting with Monday in a week, or `TRUE` for Sunday.
+* `nrow`, `ncol`: number of rows and columns defined for "monthly" calendar layout.
+&lt;!-- * `polar`: `FALSE` for Cartesian or `TRUE` for polar coordinates. --&gt;
+* `scale`: "fixed", "free", "free_wday", and "free_mday".
+&lt;!-- * `width` &amp; `height`: numerics between 0 and 1 to specify the width/height for each glyph. --&gt;
 ]
 
 
@@ -414,7 +423,7 @@ class: inverse middle center
 
 # tsibble
 ## .blue[`%&gt;%`]
-## Australia English for time series tibble
+## Australian English for time series tibble
 
 ---
 
@@ -472,6 +481,30 @@ pedestrian
 ### - coercion
 ]
 .right-column[
+### What makes a valid tsibble?
+```r
+## S3 method for class 'tbl_df', 'data.frame'
+as_tsibble(x, ..., index, validate = TRUE, regular = TRUE)
+```
+
+* `x`: other objects to be coerced to a tsibble (tbl_ts).
+* `...`: unquoted (or bare) variable(s) giving the key.
+* `index`: an unquoted (or bare) variable to specify the time index variable.
+* `validate`: `TRUE` suggests to verify that the key together with the index uniquely identifies each observation (i.e. a valid tsibble). 
+* `regular`: Regular time interval (`TRUE`) or irregular (`FALSE`). 
+
+.red[*] The key is not constrained to a single variable, but expressive for nested and crossed data structures.
+]
+
+
+---
+
+.left-column[
+## tsibble
+### - overview
+### - coercion
+]
+.right-column[
 ### Coerce to a tsibble with `as_tsibble()`
 
 ```r
@@ -509,15 +542,21 @@ pedestrian %&gt;%
 ### - verbs
 ]
 .right-column[
-* `mutate()`:
-* `select()`:
-* `filter()`:
-* `slice()`:
-* `arrange()`:
-* `rename()`:
-* `group_by()`:
-* `tsummarise()`:
+- column-wise verbs .red[*]:
+  * `mutate()`: add new variables
+  * `select()`: select variables by name
+- row-wise verbs:
+  * `filter()`: filter observations with matching conditions
+  * `slice()`: select observations by row
+  * `arrange()`: arrange observations by variables
+- other verbs:
+  * `rename()`: rename variables by name
+  * `group_by()`: group by one or more variables
+- tsibble verbs:
+  * `tsummarise()`: aggregate over calendar periods
 ]
+
+.footnote[.red[*] these verbs have an additional argument `drop = FALSE`. If `TRUE`, a tibble is returned.]
 
 ---
 
@@ -560,6 +599,31 @@ ped_ts %&gt;%
 #&gt; # ... with 506 more rows
 ```
 ]
+
+---
+
+.left-column[
+## tsibble
+### - overview
+### - coercion
+### - verbs
+### - plans
+]
+.right-column[
+### More functions on the way
+* `tbl_forcast`: tsibble for forecast
+* `expand`: make implict missing cases to explict
+* `slide`: rolling window calculation
+
+### Graphical methods for tsibble in `sugrrants`
+### Forecast methods for tsibble in `forecast`, `hts` and `fastter`
+]
+
+---
+
+class: inverse middle center
+
+## ta!
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
