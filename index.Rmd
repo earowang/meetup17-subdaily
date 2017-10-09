@@ -435,7 +435,7 @@ devtools::install_github("earowang/tsibble")
 as_tsibble(x, ..., index, validate = TRUE, regular = TRUE)
 ```
 
-* `x`: other objects to be coerced to a tsibble (tbl_ts).
+* `x`: other objects to be coerced to a tsibble (`tbl_ts`).
 * `...`: unquoted (or bare) variable(s) giving the key.
 * `index`: an unquoted (or bare) variable to specify the time index variable.
 * `validate`: `TRUE` suggests to verify that the key together with the index uniquely identifies each observation (i.e. a valid tsibble). 
@@ -517,6 +517,10 @@ as_tsibble(x, ..., index, validate = TRUE, regular = TRUE)
 ]
 
 ---
+
+background-image: url(img/data-science.png)
+background-size: 55%
+background-position: 65% 90%
 
 .left-column[
 ## tsibble
