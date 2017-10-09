@@ -439,7 +439,7 @@ as_tsibble(x, ..., index, validate = TRUE, regular = TRUE)
 * `...`: unquoted (or bare) variable(s) giving the key.
 * `index`: an unquoted (or bare) variable to specify the time index variable.
 * `validate`: `TRUE` suggests to verify that the key together with the index uniquely identifies each observation (i.e. a valid tsibble). 
-* `regular`: Regular time interval (`TRUE`) or irregular (`FALSE`). 
+* `regular`: regular time interval (`TRUE`) or irregular (`FALSE`). 
 
 .red[*] The key is not constrained to a single variable, but expressive for nested and crossed data structures.
 ]
@@ -532,7 +532,7 @@ as_tsibble(x, ..., index, validate = TRUE, regular = TRUE)
 * `slide`: rolling window calculation
 
 ### Graphical methods for tsibble in `sugrrants`
-### Forecast methods for tsibble in `forecast`, `hts` and `fastter`
+### Forecast methods for tsibble in `forecast`, `hts` and `fasster`
 ]
 
 ---
