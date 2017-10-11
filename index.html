@@ -371,12 +371,11 @@ prettify(p_flinders_free)
 .right-column[
 ### Lagged scatterplot
 ```r
-# lagged scatterplot for flinders street station in the daily calendar format
 flinders_cal_day &lt;- flinders %&gt;% 
   mutate(Lagged_Count = lag(Count)) %&gt;% 
 * frame_calendar(
 *   x = Lagged_Count, y = Count, date = Date, 
-*   calendar = "daily", width = 0.95, height = 0.8
+*   width = 0.95, height = 0.8
 * )
 
 p_flinders_day &lt;- flinders_cal_day %&gt;% 
@@ -709,7 +708,7 @@ background-position: 65% 90%
 .right-column[
 ### More on the way
 * `as_tsibble`: tsibble for forecast (`tbl_forecast`) 
-* `fill_na`: make implicit missing cases to explicit
+* `fill_na`: make implicit missing cases to be explicit
 * `slide`: rolling window calculation
 
 ### Graphical support for tsibble in `sugrrants`
