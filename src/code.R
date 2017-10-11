@@ -14,8 +14,8 @@ theme_remark <- function() {
     axis.text = element_text(size = 14), 
     strip.text = element_text(size = 16), 
     axis.title = element_text(size = 16),
-    legend.title = element_text(size = 18), 
-    legend.text = element_text(size = 18),
+    legend.title = element_text(size = 16), 
+    legend.text = element_text(size = 16),
     legend.position = "bottom"
   )
 }

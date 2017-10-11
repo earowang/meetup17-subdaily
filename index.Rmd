@@ -103,7 +103,10 @@ background-size: cover
 ```{r flinders-2016, include = FALSE}
 ```
 
-```{r flinders-2016-plot, echo = FALSE, fig.height = 11}
+```{r flinders-2016-plot, include = FALSE}
+```
+
+```{r flinders-prettify, echo = FALSE, fig.height = 11}
 ```
 
 ---

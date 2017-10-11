@@ -432,12 +432,12 @@
 <g clip-path='url(#cpMHw4NjR8NjQ4fDA=)'><text x='827.08' y='585.45' style='font-size: 14.00px; fill: #4D4D4D; font-family: Arial;' textLength='19.46px' lengthAdjust='spacingAndGlyphs'>1.2</text></g>
 <g clip-path='url(#cpMHw4NjR8NjQ4fDA=)'><text x='436.67' y='602.38' style='font-size: 16.00px; font-family: Arial;' textLength='40.00px' lengthAdjust='spacingAndGlyphs'>.Time</text></g>
 <g clip-path='url(#cpMHw4NjR8NjQ4fDA=)'><text transform='translate(16.93,311.56) rotate(-90)' style='font-size: 16.00px; font-family: Arial;' textLength='47.14px' lengthAdjust='spacingAndGlyphs'>.Count</text></g>
-<rect x='346.65' y='613.90' width='220.03' height='28.62' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpMHw4NjR8NjQ4fDA=)' />
-<g clip-path='url(#cpMHw4NjR8NjQ4fDA=)'><text x='352.32' y='634.66' style='font-size: 18.00px; font-family: Arial;' textLength='60.03px' lengthAdjust='spacingAndGlyphs'>Holiday</text></g>
-<rect x='416.12' y='619.57' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #F2F2F2;' clip-path='url(#cpMHw4NjR8NjQ4fDA=)' />
-<line x1='417.84' y1='628.21' x2='431.67' y2='628.21' style='stroke-width: 1.07; stroke: #1B9E77; stroke-linecap: butt;' clip-path='url(#cpMHw4NjR8NjQ4fDA=)' />
-<rect x='493.30' y='619.57' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #F2F2F2;' clip-path='url(#cpMHw4NjR8NjQ4fDA=)' />
-<line x1='495.03' y1='628.21' x2='508.85' y2='628.21' style='stroke-width: 1.07; stroke: #D95F02; stroke-linecap: butt;' clip-path='url(#cpMHw4NjR8NjQ4fDA=)' />
-<g clip-path='url(#cpMHw4NjR8NjQ4fDA=)'><text x='435.56' y='634.66' style='font-size: 18.00px; font-family: Arial;' textLength='57.02px' lengthAdjust='spacingAndGlyphs'>FALSE</text></g>
-<g clip-path='url(#cpMHw4NjR8NjQ4fDA=)'><text x='512.74' y='634.66' style='font-size: 18.00px; font-family: Arial;' textLength='49.00px' lengthAdjust='spacingAndGlyphs'>TRUE</text></g>
+<rect x='355.73' y='613.90' width='201.88' height='28.62' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpMHw4NjR8NjQ4fDA=)' />
+<g clip-path='url(#cpMHw4NjR8NjQ4fDA=)'><text x='361.40' y='633.94' style='font-size: 16.00px; font-family: Arial;' textLength='53.36px' lengthAdjust='spacingAndGlyphs'>Holiday</text></g>
+<rect x='418.58' y='619.57' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #F2F2F2;' clip-path='url(#cpMHw4NjR8NjQ4fDA=)' />
+<line x1='420.31' y1='628.21' x2='434.13' y2='628.21' style='stroke-width: 1.07; stroke: #1B9E77; stroke-linecap: butt;' clip-path='url(#cpMHw4NjR8NjQ4fDA=)' />
+<rect x='489.59' y='619.57' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #F2F2F2;' clip-path='url(#cpMHw4NjR8NjQ4fDA=)' />
+<line x1='491.32' y1='628.21' x2='505.14' y2='628.21' style='stroke-width: 1.07; stroke: #D95F02; stroke-linecap: butt;' clip-path='url(#cpMHw4NjR8NjQ4fDA=)' />
+<g clip-path='url(#cpMHw4NjR8NjQ4fDA=)'><text x='438.02' y='633.94' style='font-size: 16.00px; font-family: Arial;' textLength='50.69px' lengthAdjust='spacingAndGlyphs'>FALSE</text></g>
+<g clip-path='url(#cpMHw4NjR8NjQ4fDA=)'><text x='509.03' y='633.94' style='font-size: 16.00px; font-family: Arial;' textLength='43.55px' lengthAdjust='spacingAndGlyphs'>TRUE</text></g>
 </svg>
