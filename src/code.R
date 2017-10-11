@@ -120,7 +120,7 @@ p_flinders_daily <- flinders_daily %>%
   geom_line() +
   scale_colour_brewer(palette = "Dark2") +
   theme_remark()
-prettify(p_flinders_daily)
+prettify(p_flinders_daily, size = 5)
 
 ## ---- flinders-free
 # calendar plot for flinders street station using local scale

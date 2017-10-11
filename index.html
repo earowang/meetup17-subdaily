@@ -140,11 +140,8 @@ background-size: cover
 
 ---
 
-
-
-
-
-&lt;img src="figure/flinders-prettify-1.svg" style="display: block; margin: auto;" /&gt;
+background-image: url(figure/flinders-prettify-1.svg)
+background-size: 80%
 
 ---
 
@@ -266,7 +263,9 @@ flinders_weekly &lt;- flinders %&gt;%
 *   x = Time, y = Count, date = Date, calendar = "weekly"
 * )
 p_flinders_weekly &lt;- flinders_weekly %&gt;% 
-  ggplot(aes(x = .Time, y = .Count, group = Date, colour = Holiday)) +
+  ggplot(aes(
+    x = .Time, y = .Count, group = Date, colour = Holiday
+  )) +
   geom_line() +
   scale_colour_brewer(palette = "Dark2")
 prettify(p_flinders_weekly)
