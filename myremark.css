@@ -47,7 +47,6 @@ ul li li:before {
 .blue { color: #3F88C5; }
 .large { font-size: 2em; }
 a, a > code {
-  color: #D00000;
   text-decoration: none;
 }
 code {
@@ -55,7 +54,7 @@ code {
   border-radius: 5px;
 }
 .remark-code, .remark-inline-code { font-family: 'Source Code Pro'; font-size: 80%; }
-/* .remark-code-line-highlighted     { background-color: #88fc6f; } */
+/* .remark-code-line-highlighted     { background-color: #ffffb3; } */
 .pull-left {
   float: left;
   width: 47%;
@@ -75,8 +74,9 @@ code {
   padding: 15px;
 }
 .inverse {
-  background: #272822;
-  color: #777872;
+  background: linear-gradient(0deg, rgb(115, 115, 130), rgb(18, 11, 49));
+  /* background: rgb(18, 11, 49); */
+  color: rgb(223, 73, 66);
   text-shadow: 0 0 20px #333;
 }
 .inverse h1, .inverse h2 {

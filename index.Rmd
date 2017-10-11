@@ -90,7 +90,7 @@ read_chunk('src/code.R')
 class: inverse middle center
 
 # sugrrants
-## .blue[`%>%`]
+## .blue[%>%]
 ## calendar-based visualisation
 
 ---
@@ -116,9 +116,12 @@ background-size: cover
 ### The `frame_calendar()` function
 
 ```r
-# calendar plot for flinders street station
 flinders <- subdat %>% 
-  filter(Sensor == "Flinders Street Station Underpass")
+  filter(Sensor == "Flinders Street Station Underpass") %>% 
+  mutate(
+    Holiday = ifelse(Date %in% au_holiday(2016)$date, 
+    TRUE, FALSE)
+  )
 flinders_cal <- flinders %>%
 * frame_calendar(x = Time, y = Count, date = Date)
 flinders_cal
@@ -171,9 +174,100 @@ p_flinders <- flinders_cal %>%
   )) +
   geom_line() +
   scale_colour_brewer(palette = "Dark2")
-prettify(p_flinders)
+p_flinders
 ```
 ```{r flinders-2016-plot, echo = FALSE, fig.height = 9}
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+]
+.right-column[
+```r
+prettify(p_flinders)
+```
+```{r flinders-prettify, echo = FALSE, fig.height = 10}
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Weekly calendar
+```r
+flinders_weekly <- flinders %>%
+* frame_calendar(
+*   x = Time, y = Count, date = Date, calendar = "weekly"
+* )
+p_flinders_weekly <- flinders_weekly %>% 
+  ggplot(aes(x = .Time, y = .Count, group = Date, colour = Holiday)) +
+  geom_line() +
+  scale_colour_brewer(palette = "Dark2")
+prettify(p_flinders_weekly)
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Weekly calendar
+```{r weekly, echo = FALSE, fig.width = 8, fig.height = 8, fig.align = "center"}
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Daily calendar
+```r
+flinders_daily <- flinders %>%
+* frame_calendar(
+*   x = Time, y = Count, date = Date, calendar = "daily"
+* )
+p_flinders_daily <- flinders_daily %>% 
+  ggplot(aes(
+    x = .Time, y = .Count, group = Date, colour = Holiday
+  )) +
+  geom_line() +
+  scale_colour_brewer(palette = "Dark2")
+prettify(p_flinders_daily)
+```
+]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### Daily calendar
+```{r daily, echo = FALSE, fig.height = 10}
 ```
 ]
 
@@ -224,19 +318,19 @@ prettify(p_flinders_free)
 ### - variations
 ]
 .right-column[
-### Lagged scatterplot on a "daily" calendar
+### Lagged scatterplot
 ```r
 # lagged scatterplot for flinders street station in the daily calendar format
 flinders_cal_day <- flinders %>% 
-  mutate(Lagged_Counts = lag(Count)) %>% 
+  mutate(Lagged_Count = lag(Count)) %>% 
 * frame_calendar(
-*   x = Count, y = Lagged_Counts, date = Date, 
+*   x = Lagged_Count, y = Count, date = Date, 
 *   calendar = "daily", width = 0.95, height = 0.8
 * )
 
 p_flinders_day <- flinders_cal_day %>% 
-  ggplot(aes(x = .Count, y = .Lagged_Counts, group = Date)) +
-  geom_point(size = 0.8, alpha = 0.8)
+  ggplot(aes(x = .Lagged_Count, y = .Count, group = Date)) +
+  geom_point(size = 0.7, alpha = 0.6)
 prettify(p_flinders_day)
 ```
 ]
@@ -250,7 +344,7 @@ prettify(p_flinders_day)
 ### - variations
 ]
 .right-column[
-### Lagged scatterplot on a "daily" calendar
+### Lagged scatterplot
 ```{r scatterplot, echo = FALSE}
 ```
 ]
@@ -343,7 +437,7 @@ prettify(p_boxplot, label = c("label", "text", "text2"))
 ### - variations
 ]
 .right-column[
-### boxplots
+### Boxplots
 ```{r boxplot, echo = FALSE}
 ```
 ]
@@ -372,8 +466,8 @@ prettify(p_boxplot, label = c("label", "text", "text2"))
 class: inverse middle center
 
 # tsibble
-## .blue[`%>%`]
-## Australian English for time series tibble
+## .blue[%>%]
+## Chinglish for time series tibble
 
 ---
 
@@ -489,6 +583,7 @@ as_tsibble(x, ..., index, validate = TRUE, regular = TRUE)
 - column-wise verbs .red[*]:
   * `mutate()`: add new variables
   * `select()`: select variables by name
+  * `summarise()`: reduce multiple values down to a single value (ToDo)
 - row-wise verbs:
   * `filter()`: filter observations with matching conditions
   * `slice()`: select observations by row
@@ -530,12 +625,12 @@ background-position: 65% 90%
 ### - plans
 ]
 .right-column[
-### More functions on the way
-* `tbl_forcast`: tsibble for forecast
-* `expand`: make implict missing cases to explict
+### More on the way
+* `as_tsibble`: tsibble for forecast (`tbl_forecast`) 
+* `fill_na`: make implicit missing cases to explicit
 * `slide`: rolling window calculation
 
-### Graphical methods for tsibble in `sugrrants`
+### Graphical support for tsibble in `sugrrants`
 ### Forecast methods for tsibble in `forecast`, `hts` and `fasster`
 ]
 

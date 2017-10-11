@@ -14,8 +14,8 @@ theme_remark <- function() {
     axis.text = element_text(size = 14), 
     strip.text = element_text(size = 16), 
     axis.title = element_text(size = 16),
-    legend.title = element_text(size = 16), 
-    legend.text = element_text(size = 16),
+    legend.title = element_text(size = 18), 
+    legend.text = element_text(size = 18),
     legend.position = "bottom"
   )
 }
@@ -97,7 +97,30 @@ p_flinders <- flinders_cal %>%
   geom_line() +
   scale_colour_brewer(palette = "Dark2") +
   theme_remark()
+p_flinders
+
+## ---- flinders-prettify
 prettify(p_flinders)
+
+## ---- weekly
+flinders_weekly <- flinders %>%
+  frame_calendar(x = Time, y = Count, date = Date, calendar = "weekly")
+p_flinders_weekly <- flinders_weekly %>% 
+  ggplot(aes(x = .Time, y = .Count, group = Date, colour = Holiday)) +
+  geom_line() +
+  scale_colour_brewer(palette = "Dark2") +
+  theme_remark()
+prettify(p_flinders_weekly)
+
+## ---- daily
+flinders_daily <- flinders %>%
+  frame_calendar(x = Time, y = Count, date = Date, calendar = "daily")
+p_flinders_daily <- flinders_daily %>% 
+  ggplot(aes(x = .Time, y = .Count, group = Date, colour = Holiday)) +
+  geom_line() +
+  scale_colour_brewer(palette = "Dark2") +
+  theme_remark()
+prettify(p_flinders_daily)
 
 ## ---- flinders-free
 # calendar plot for flinders street station using local scale
@@ -114,15 +137,15 @@ prettify(p_flinders_free, size = 5)
 ## ---- scatterplot
 # lagged scatterplot for flinders street station in the daily calendar format
 flinders_cal_day <- flinders %>% 
-  mutate(Lagged_Counts = lag(Count)) %>% 
+  mutate(Lagged_Count = lag(Count)) %>% 
   frame_calendar(
-    x = Count, y = Lagged_Counts, date = Date, 
-    calendar = "daily", width = 0.95, height = 0.8
+    x = Lagged_Count, y = Count, date = Date, 
+    width = 0.95, height = 0.8
   )
 
 p_flinders_day <- flinders_cal_day %>% 
-  ggplot(aes(x = .Count, y = .Lagged_Counts, group = Date)) +
-  geom_point(size = 0.8, alpha = 0.8)
+  ggplot(aes(x = .Lagged_Count, y = .Count, group = Date)) +
+  geom_point(size = 0.7, alpha = 0.6)
 prettify(p_flinders_day, size = 5)
 
 ## ---- overlay
