@@ -131,32 +131,6 @@ flinders_cal
 
 ---
 
-.left-column[
-## Calendar-based vis
-### - rearrange
-]
-.right-column[
-### The args of `frame_calendar()`
-```r
-frame_calendar(
-  data, x, y, date, calendar = "monthly", dir = "h",
-  sunday = FALSE, nrow = NULL, ncol = NULL, polar = FALSE,
-  scale = "fixed", width = 0.95, height = 0.95
-)
-```
-* `x`, `y`: a unquoted (or bare) variable mapping to x and y axis.
-* `date`: a Date variable mapping to dates in the calendar.
-* `calendar`: type of calendar. "monthly", "weekly", "daily".
-<!-- * `dir`: direction of calendar: "h" for horizontal or "v" for vertical. -->
-* `sunday`: `FALSE` indicating to starting with Monday in a week, or `TRUE` for Sunday.
-* `nrow`, `ncol`: number of rows and columns defined for "monthly" calendar layout.
-<!-- * `polar`: `FALSE` for Cartesian or `TRUE` for polar coordinates. -->
-* `scale`: "fixed", "free", "free_wday", and "free_mday".
-<!-- * `width` & `height`: numerics between 0 and 1 to specify the width/height for each glyph. -->
-]
-
-
----
 
 .left-column[
 ## Calendar-based vis
@@ -191,6 +165,35 @@ prettify(p_flinders)
 ```{r flinders-prettify, echo = FALSE, fig.height = 11}
 ```
 ]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### The args of `frame_calendar()`
+```r
+frame_calendar(
+  data, x, y, date, calendar = "monthly", dir = "h",
+  sunday = FALSE, nrow = NULL, ncol = NULL, polar = FALSE,
+  scale = "fixed", width = 0.95, height = 0.95
+)
+```
+* `x`, `y`: a unquoted (or bare) variable mapping to x and y axis.
+* `date`: a Date variable mapping to dates in the calendar.
+* `calendar`: type of calendar. "monthly", "weekly", "daily".
+<!-- * `dir`: direction of calendar: "h" for horizontal or "v" for vertical. -->
+* `sunday`: `FALSE` indicating to starting with Monday in a week, or `TRUE` for Sunday.
+* `nrow`, `ncol`: number of rows and columns defined for "monthly" calendar layout.
+<!-- * `polar`: `FALSE` for Cartesian or `TRUE` for polar coordinates. -->
+* `scale`: "fixed", "free", "free_wday", and "free_mday".
+<!-- * `width` & `height`: numerics between 0 and 1 to specify the width/height for each glyph. -->
+]
+
 
 ---
 

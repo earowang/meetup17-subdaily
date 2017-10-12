@@ -188,32 +188,6 @@ flinders_cal
 
 ---
 
-.left-column[
-## Calendar-based vis
-### - rearrange
-]
-.right-column[
-### The args of `frame_calendar()`
-```r
-frame_calendar(
-  data, x, y, date, calendar = "monthly", dir = "h",
-  sunday = FALSE, nrow = NULL, ncol = NULL, polar = FALSE,
-  scale = "fixed", width = 0.95, height = 0.95
-)
-```
-* `x`, `y`: a unquoted (or bare) variable mapping to x and y axis.
-* `date`: a Date variable mapping to dates in the calendar.
-* `calendar`: type of calendar. "monthly", "weekly", "daily".
-&lt;!-- * `dir`: direction of calendar: "h" for horizontal or "v" for vertical. --&gt;
-* `sunday`: `FALSE` indicating to starting with Monday in a week, or `TRUE` for Sunday.
-* `nrow`, `ncol`: number of rows and columns defined for "monthly" calendar layout.
-&lt;!-- * `polar`: `FALSE` for Cartesian or `TRUE` for polar coordinates. --&gt;
-* `scale`: "fixed", "free", "free_wday", and "free_mday".
-&lt;!-- * `width` &amp; `height`: numerics between 0 and 1 to specify the width/height for each glyph. --&gt;
-]
-
-
----
 
 .left-column[
 ## Calendar-based vis
@@ -246,6 +220,35 @@ prettify(p_flinders)
 ```
 &lt;img src="figure/flinders-prettify-1.svg" style="display: block; margin: auto;" /&gt;
 ]
+
+---
+
+.left-column[
+## Calendar-based vis
+### - rearrange
+### - ggplot2 vis
+### - variations
+]
+.right-column[
+### The args of `frame_calendar()`
+```r
+frame_calendar(
+  data, x, y, date, calendar = "monthly", dir = "h",
+  sunday = FALSE, nrow = NULL, ncol = NULL, polar = FALSE,
+  scale = "fixed", width = 0.95, height = 0.95
+)
+```
+* `x`, `y`: a unquoted (or bare) variable mapping to x and y axis.
+* `date`: a Date variable mapping to dates in the calendar.
+* `calendar`: type of calendar. "monthly", "weekly", "daily".
+&lt;!-- * `dir`: direction of calendar: "h" for horizontal or "v" for vertical. --&gt;
+* `sunday`: `FALSE` indicating to starting with Monday in a week, or `TRUE` for Sunday.
+* `nrow`, `ncol`: number of rows and columns defined for "monthly" calendar layout.
+&lt;!-- * `polar`: `FALSE` for Cartesian or `TRUE` for polar coordinates. --&gt;
+* `scale`: "fixed", "free", "free_wday", and "free_mday".
+&lt;!-- * `width` &amp; `height`: numerics between 0 and 1 to specify the width/height for each glyph. --&gt;
+]
+
 
 ---
 
