@@ -89,8 +89,9 @@ read_chunk('src/code.R')
 
 class: inverse middle center
 
-# sugrrants
-## .blue[%>%]
+
+.sticker-float[![sugrrants](img/sugrrants.svg)]
+
 ## calendar-based visualisation
 
 ---
@@ -466,8 +467,9 @@ prettify(p_boxplot, label = c("label", "text", "text2"))
 
 class: inverse middle center
 
-# tsibble
-## .blue[%>%]
+
+.sticker-float[![tsibble](img/tsibble.svg)]
+
 ## Chinglish for time series tibble
 
 ---
